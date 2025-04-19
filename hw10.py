@@ -26,8 +26,6 @@ def register_user_v1(password: str) -> str:
     return "Успешная регистрация! Пароль надежный."
 
 # Часть two
-
-
 def password_validator(
     min_length: int = 8,
     min_uppercase: int = 1,
@@ -81,3 +79,31 @@ def register_user_v2(username: str, password: str) -> None:
     with open('users.csv', 'a', newline='', encoding='utf-8') as file:
         writer = csv.writer(file)
         writer.writerow([username, password])
+
+# Тест
+if __name__ == "__main__":
+    print("Тест 1 части")
+    tests_part1 = [
+        "Short1!",
+        "GoodPass123!"
+    ]
+    for pwd in tests_part1:
+        print(f"Пароль: {pwd}")
+        print(register_user_v1(pwd), end="\n\n")
+
+    print("\nТест 2 части")
+    try:
+        register_user_v2("JohnDoe", "PerfectPass123!!")
+        print("Успешная регистрация")
+    except ValueError as e:
+        print(f"Ошибка: {e}")
+
+    try:
+        register_user_v2("Bad User", "weakpass")
+    except ValueError as e:
+        print(f"Ошибка: {e}")
+
+    try:
+        register_user_v2("JaneDoe", "WeakPass")
+    except ValueError as e:
+        print(f"Ошибка: {e}")
